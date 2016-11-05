@@ -1,22 +1,14 @@
-name := """play-sbt-layout-seed"""
+name := """play-scala"""
 
-version := "1.0-SNAPSHOT"
+version := "1.0"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.1"
 
 libraryDependencies ++= Seq(
   jdbc,
+  anorm,
   cache,
-  ws,
-  specs2 % Test
+  ws
 )
-
-resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
-
-// Play provides two styles of routers, one expects its actions to be injected, the
-// other, legacy style, accesses its actions statically.
-routesGenerator := InjectedRoutesGenerator
-
-disablePlugins(PlayLayoutPlugin)
