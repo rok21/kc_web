@@ -1,0 +1,5 @@
+application.name = kc_web
+
+register = Register
+mail = Email
+password = Password

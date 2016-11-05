@@ -3,10 +3,8 @@ package controllers
 import play.api._
 import play.api.mvc._
 
-object Application extends Controller {
-
+object Registration extends Controller{
   def index = Action {
-    Redirect(routes.Registration.index())
+    Ok(views.html.registration())
   }
-
 }
