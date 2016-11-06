@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index
-POST    /registration               controllers.Registration.save
+POST    /registration/save          controllers.Registration.save
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file)
 GET     /*any                       controllers.Application.angular(any)

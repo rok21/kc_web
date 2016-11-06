@@ -13,6 +13,7 @@ object Registration extends Controller{
   def index = ???
 
   def save = Action.async {
+    println("here")
     Future.successful(Ok("kk"))
   }
 }

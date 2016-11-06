@@ -20,7 +20,7 @@
         <label for="user-name" class="col-xs-2 col-form-label">Password</label>
 
         <div class="col-xs-8 col-lg-3">
-            <input class="form-control" type="password" id="password" ng-model="$data.pass">
+            <input class="form-control" type="password" id="password" ng-model="$data.password">
         </div>
     </div>
 
@@ -28,11 +28,13 @@
         <label for="user-name" class="col-xs-2 col-form-label">Repeat password</label>
 
         <div class="col-xs-8 col-lg-3">
-            <input class="form-control" type="password" id="password-repeated" ng-model="$data.passRepeated">
+            <input class="form-control" type="password" id="password-repeated" ng-model="$data.passwordRepeated">
         </div>
     </div>
 
     <pre>{{ $data | json }}</pre>
+
+    <pre ng-show="$error">{{$error}}</pre>
 
     <div class="form-group">
         <div class="col-xs-offset-8 col-lg-offset-5 col-xs-2">
