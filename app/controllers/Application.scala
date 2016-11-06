@@ -5,8 +5,7 @@ import play.api.mvc._
 
 object Application extends Controller {
 
-  def index = Action {
-    Redirect(routes.Registration.index())
-  }
+  def index = Action(Ok(views.html.main.render()))
 
+  def angular(any: Any) = index
 }
