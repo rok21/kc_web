@@ -3,3 +3,10 @@ application.name = kc_web
 register = Register
 mail = Email
 password = Password
+nick = User name
+
+
+validation.errors = Please correct the errors in the form.
+error.nick = Between 4 and 12 characters for user name.
+error.email = Incorrect email
+error.password = More than 6 characters for password
