@@ -1,4 +1,4 @@
-var app = angular.module("et", ["ngResource", "ngRoute"]);
+var app = angular.module("kc_web", ["ngResource", "ngRoute"]);
 
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider

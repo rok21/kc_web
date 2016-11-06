@@ -1,3 +1,43 @@
-<h1>
-    purple disco!
-</h1>
+<form id ="registrationForm" class="form col-xs-offset-2" role="form" ng-submit="onComplete()">
+
+    <div class="form-group row">
+        <label for="email" class="col-xs-2 col-form-label">Email</label>
+
+        <div class="col-xs-8 col-lg-3">
+            <input class="form-control" type="text" id="email" ng-model="$data.email">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="user-name" class="col-xs-2 col-form-label">Username</label>
+
+        <div class="col-xs-8 col-lg-3">
+            <input class="form-control" type="text" id="user-name" ng-model="$data.username">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="user-name" class="col-xs-2 col-form-label">Password</label>
+
+        <div class="col-xs-8 col-lg-3">
+            <input class="form-control" type="password" id="password" ng-model="$data.pass">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="user-name" class="col-xs-2 col-form-label">Repeat password</label>
+
+        <div class="col-xs-8 col-lg-3">
+            <input class="form-control" type="password" id="password-repeated" ng-model="$data.passRepeated">
+        </div>
+    </div>
+
+    <pre>{{ $data | json }}</pre>
+
+    <div class="form-group">
+        <div class="col-xs-offset-8 col-lg-offset-5 col-xs-2">
+            <button type="submit" class="btn btn-success btn-lg" id="btn_create">Go!</button>
+        </div>
+    </div>
+
+</form>
