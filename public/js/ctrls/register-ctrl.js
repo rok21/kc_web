@@ -1,7 +1,4 @@
-app.controller('RegisterCtrl', ['validation', '$scope', '$http', '$resource', '$routeParams',
-    function(validation, $scope, $http, $resource, $routeParams){
-
-    console.log("welcome to register-ctrl")
+app.controller('RegisterCtrl', function(validation, $scope, $http, $resource, $routeParams){
 
     $scope.onComplete = function(){
         var formError = validation.validRegForm(this.$data)
@@ -12,4 +9,4 @@ app.controller('RegisterCtrl', ['validation', '$scope', '$http', '$resource', '$
             this.$error = formError
         }
     }
-}]);
+});

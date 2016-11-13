@@ -4,7 +4,9 @@
 
 # Home page
 GET     /                           controllers.Application.index
+GET     /login                      controllers.Login.index
 POST    /registration/save          controllers.Registration.save
+GET     /homepage/user              controllers.Homepage.getUserInfo
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file)
 GET     /*any                       controllers.Application.angular(any)

@@ -1,19 +1,16 @@
 package controllers
 
-import models.User
-import play.api._
-import play.api.data._
-import play.api.data.Forms._
-import play.api.i18n.Messages
-import play.api.mvc._
+import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.Future
 
+/**
+  * Created by Rokas on 13/11/2016.
+  */
 object Registration extends Controller{
-  def index = ???
 
   def save = Action.async {
     println("here")
-    Future.successful(Ok("kk"))
+    Future.successful(Ok("???"))
   }
 }
