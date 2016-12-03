@@ -1,5 +1,6 @@
-package controllers
+package controllers.security
 
+import controllers.routes
 import models.User
 import play.api.mvc._
 
@@ -9,7 +10,10 @@ trait Secured {
 
     def username(request: RequestHeader): Option[String] = request.session.get(Security.username)
 
-    def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Login.index())
+    def onUnauthorized(request: RequestHeader) = {
+      println(s"onUnauthorized: ${request}, session: ${request.session}")
+      Results.Unauthorized
+    }
 
     def withAuth(f: => String => Request[AnyContent] => Result) = {
       Security.Authenticated(username, onUnauthorized) { user =>
@@ -17,11 +21,11 @@ trait Secured {
       }
     }
 
-  def withAuthAsync(f: => String => Request[AnyContent] => Future[Result]) = {
-    Security.Authenticated(username, onUnauthorized) { user =>
-      Action.async(request => f(user)(request))
+    def withAuthAsync(f: => String => Request[AnyContent] => Future[Result]) = {
+      Security.Authenticated(username, onUnauthorized) { user =>
+        Action.async(request => f(user)(request))
+      }
     }
-  }
 
     /**
       * This method shows how you could wrap the withAuth method to also fetch your user

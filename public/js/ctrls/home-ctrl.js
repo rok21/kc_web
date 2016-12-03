@@ -10,9 +10,11 @@ app.controller('HomeCtrl', function($scope, $http, $resource, $routeParams){
                 "headers: " + headers + "\n\n"
               console.log(zz)
             };
-        $http.get("/homepage/user").success(function (data, status, headers, config)
-        {
+        $http.get("/users/user").success(function (data, status, headers, config){
             $scope.userInfo = data
             logResult("GET SUCCESS", data, status, headers, config);
         })
+        .error(function (response){
+           logResult(response);
+       })
 });

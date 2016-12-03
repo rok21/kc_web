@@ -1,44 +1,39 @@
 package controllers
 
-import play.api.mvc.{Action, Controller}
+import play.api.libs.json.JsValue
+import play.api.mvc._
+
+import scala.util.Try
 
 /**
   * Created by Rokas on 13/11/2016.
   */
 object Login extends Controller {
 
-  def index = {
-    println("login index")
-    Action(Ok(views.html.main()))
+  def checkCreds = Action { request =>
+    credsFrom(request).flatMap{
+      case (uname, pass) if credsValid(uname, pass) =>{
+        Some(
+          Ok.withSession(Security.username -> uname)
+        )
+      }
+      case _ => None
+    }.getOrElse({
+      println("Ok(\"Invalid credentials\")")
+      Ok("Invalid credentials")
+    })
   }
 
-//  val loginForm = Form(
-//    mapping (
-//      "email" -> text,
-//      "password" -> text
-//    ) verifying ("Invalid email or password", result => result match {
-//      case (email, password) => check(email, password)
-//    })
-//  )
-//
-//  def check(username: String, password: String) = {
-//    (username == "admin" && password == "1234")
-//  }
-//
-//  def login = Action { implicit request =>
-//    Ok(html.login(loginForm))
-//  }
-//
-//  def authenticate = Action { implicit request =>
-//    loginForm.bindFromRequest.fold(
-//      formWithErrors => BadRequest(html.login(formWithErrors)),
-//      user => Redirect(routes.Application.index).withSession(Security.username -> user._1)
-//    )
-//  }
-//
-//  def logout = Action {
-//    Redirect(routes.Auth.login).withNewSession.flashing(
-//      "success" -> "You are now logged out."
-//    )
-//  }
+  private def credsValid(uname: String, pass: String) = {
+    uname == "rok" && pass == "123"
+  }
+
+  private def credsFrom(request: Request[AnyContent]) : Option[(String, String)] =
+    request.body.asJson.flatMap{
+      case json => Try({
+        val uname = (json \ "username").as[String]
+        val pass = (json \ "password").as[String]
+        (uname, pass)
+      }).toOption
+    }
 }
