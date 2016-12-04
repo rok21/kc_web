@@ -12,6 +12,9 @@ cd kc_web
 
 
 scp -i ~/Downloads/testKey1.pem remotescript.sh ubuntu@ec2-54-229-142-68.eu-west-1.compute.amazonaws.com:~/
+echo "remotescript.sh copied"
+sleep 2
+
 ssh -i ~/Downloads/testKey1.pem ubuntu@ec2-54-229-142-68.eu-west-1.compute.amazonaws.com << EOF
 {
  sleep 2
