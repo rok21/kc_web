@@ -39,3 +39,12 @@ app.config(function($routeProvider, $locationProvider, $provide, $httpProvider) 
 
     $httpProvider.interceptors.push('ErrorInterceptor');
 });
+
+app.directive('header', function () {
+    return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: "/assets/html/header.html",
+        controller: "HeaderCtrl"
+    }
+});

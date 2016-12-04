@@ -11,7 +11,7 @@ object Users extends Controller with Secured{
   def getUserInfo = withAuthAsync { username => implicit request =>
     {
       val f = Future {
-        Thread.sleep(5000)
+        Thread.sleep(1000)
         420
       }
       val df = f.map(data => Ok(Json.toJson(data)).withSession())

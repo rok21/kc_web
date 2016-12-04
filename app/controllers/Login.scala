@@ -23,15 +23,17 @@ object Login extends Controller with CookieSupport{
     }.getOrElse(Ok("Invalid credentials"))
   }
 
-  def isLoggedIn = Action {
+  def logout = Action { Ok.destroySession }
+
+  def currentUser = Action {
     request => getUser(request) match {
-      case Some(user) => Ok("true")
-      case None => Ok("false")
+      case Some(user) => Ok(user)
+      case None => Ok
     }
   }
 
   private def credsValid(uname: String, pass: String) = {
-    uname == "a" && pass == "a"
+    (uname == "a" && pass == "a") || (uname == "b" && pass == "b")
   }
 
   private def credsFrom(request: Request[AnyContent]) : Option[(String, String)] =

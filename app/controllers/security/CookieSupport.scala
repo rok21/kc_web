@@ -2,7 +2,7 @@ package controllers.security
 
 import play.api._
 import play.api.libs.Crypto
-import play.api.mvc.{Cookie, RequestHeader, Result}
+import play.api.mvc.{Cookie, DiscardingCookie, RequestHeader, Result}
 
 trait CookieSupport {
 
@@ -33,6 +33,10 @@ object CookieSupport{
         val oldCookie = request.cookies(SessionKey)
         val newCookie = oldCookie.copy(maxAge = Some(CookieMaxAge))
         response.withCookies(newCookie)
+    }
+
+    def destroySession = {
+      response.discardingCookies(DiscardingCookie(SessionKey))
     }
   }
 }

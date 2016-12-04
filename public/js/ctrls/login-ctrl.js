@@ -1,11 +1,18 @@
-app.controller('LoginCtrl', function($scope, $http, $resource, $routeParams, $location){
+app.controller('LoginCtrl', function($rootScope, $scope, $http, $resource, $routeParams, $location){
 
-    $http.get("/login/already")
-    .success(function(response){
-        if(response === "true"){
-            onLoggedIn()
-        }
-    })
+    checkCurrentUser = function(){
+        $http.get("/login/current")
+         .success(function(response){
+            if(response){
+                onLoggedIn(response)
+            }
+        })
+    }
+
+    onLoggedIn = function(username){
+        $rootScope.user = username
+        $location.path('/home')
+    }
 
     $scope.onComplete = function(){
         $http.post("/login", this.$data)
@@ -13,12 +20,10 @@ app.controller('LoginCtrl', function($scope, $http, $resource, $routeParams, $lo
             if(response){
                 $scope.$error = response
             }else{
-                onLoggedIn()
+                checkCurrentUser()
             }
         })
     }
 
-    onLoggedIn = function(){
-        $location.path('/home')
-    }
+    checkCurrentUser()
 });

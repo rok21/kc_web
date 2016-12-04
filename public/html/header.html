@@ -1,0 +1,14 @@
+<div>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a ng-show="$user" class="navbar-brand" href="/">yO! {{$user}}</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="$user" ng-click="onLogout()"><a href=""><i class="fa fa-logout"></i> Logout</a></li>
+                <li ng-show="!$user"><a href="login"><i class="fa fa-login"></i> Login</a></li>
+                <li ng-show="$user"><a href="/"><i class="fa fa-home"></i> Home</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
