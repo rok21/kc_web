@@ -10,7 +10,6 @@ import scala.concurrent.Future
 object Registration extends Controller{
 
   def save = Action.async {
-    println("here")
     Future.successful(Ok("???"))
   }
 }

@@ -6,7 +6,8 @@
 GET     /                           controllers.Application.index
 POST    /registration/save          controllers.Registration.save
 GET     /users/user                 controllers.Users.getUserInfo
-POST    /login                      controllers.Login.checkCreds
+GET     /login/already              controllers.Login.isLoggedIn
+POST    /login                      controllers.Login.login
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file)
 GET     /*any                       controllers.Application.angular(any)

@@ -10,13 +10,11 @@ import scala.concurrent.{Future, Promise}
 object Users extends Controller with Secured{
   def getUserInfo = withAuthAsync { username => implicit request =>
     {
-      println("working..")
       val f = Future {
         Thread.sleep(5000)
-        println("ready")
         420
       }
-      val df = f.map(data => Ok(Json.toJson(data)))
+      val df = f.map(data => Ok(Json.toJson(data)).withSession())
       df
     }
   }

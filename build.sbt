@@ -1,4 +1,4 @@
-name := """play-scala"""
+name := """kc_web"""
 
 version := "1.0"
 
