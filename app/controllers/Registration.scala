@@ -7,7 +7,7 @@ import scala.concurrent.Future
 /**
   * Created by Rokas on 13/11/2016.
   */
-object Registration extends Controller{
+class Registration extends Controller{
 
   def save = Action.async {
     Future.successful(Ok("???"))

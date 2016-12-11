@@ -1,5 +1,6 @@
 package controllers.security
 
+import helpers.ConfigHelper
 import play.api._
 import play.api.libs.Crypto
 import play.api.mvc.{Cookie, DiscardingCookie, RequestHeader, Result}
@@ -18,8 +19,8 @@ trait CookieSupport {
 }
 
 object CookieSupport{
-  private lazy val CookieMaxAge = Play.maybeApplication.flatMap(_.configuration.getInt("session.maxAgeSecs")) getOrElse 3600
-  private lazy val SessionKey = Play.maybeApplication.flatMap(_.configuration.getString("session.cookieName")) getOrElse "KC_SESSION"
+  private lazy val CookieMaxAge = ConfigHelper.getCookieMaxAge
+  private lazy val SessionKey = ConfigHelper.getSessionCookieName
 
   implicit class ResponseWithSessionCookies(val response: Result){
 

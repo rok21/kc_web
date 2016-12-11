@@ -9,7 +9,7 @@ import scala.util.Try
 /**
   * Created by Rokas on 13/11/2016.
   */
-object Login extends Controller with CookieSupport{
+class Login extends Controller with CookieSupport{
 
   import CookieSupport._
 

@@ -15,10 +15,12 @@ ssh -i ~/.ssh/newkey.pem ubuntu@ec2-54-171-173-163.eu-west-1.compute.amazonaws.c
  sleep 2
  echo "trying kill existing process"
  
- sudo fuser 80/tcp
+ sudo fuser -k 80/tcp
  
- rm -r -f /home/ubuntu/kc_web-1.0
- rm /home/ubuntu/kc_web-1.0.zip
+ echo "sudo fuser -k 80/tcp"
+ 
+ sudo rm -r -f /home/ubuntu/kc_web-1.0
+ sudo rm /home/ubuntu/kc_web-1.0.zip
  logout
 } || {
  echo "catch exception!"
