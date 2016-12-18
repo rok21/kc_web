@@ -4,3 +4,7 @@ CREATE TABLE USERS(
    EMAIL          TEXT    NOT NULL UNIQUE,
    PASSWORD       TEXT
 );
+
+CREATE SEQUENCE user_id_seq;
+
+ALTER TABLE users ALTER id SET DEFAULT NEXTVAL('user_id_seq');
