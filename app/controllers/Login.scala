@@ -1,26 +1,29 @@
 package controllers
 
+import com.google.inject.Inject
 import controllers.security.CookieSupport
-import play.api.libs.json.JsValue
+import helpers.JsonHelper
+import play.api.libs.concurrent.Execution.Implicits._
 import play.api.mvc._
+import services.UserService
 
-import scala.util.Try
+import scala.concurrent.Future
 
 /**
   * Created by Rokas on 13/11/2016.
   */
-class Login extends Controller with CookieSupport{
+class Login @Inject()(userService: UserService) extends Controller with CookieSupport{
 
   import CookieSupport._
 
-  def login = Action { request =>
-    credsFrom(request).flatMap{
-      case (uname, pass) if credsValid(uname, pass) =>
-        Some(
-          Ok.addSessionCookie(uname)
-        )
-      case _ => None
-    }.getOrElse(Ok("Invalid credentials"))
+  def login = Action.async { request =>
+    JsonHelper.getLoginCreds(request).map {
+      case (login, pass) => {
+        userService.login(login, pass).map {
+          case user => Ok.addSessionCookie(user.nick)
+        }
+      }
+    }.getOrElse(Future.failed(new Exception("Invalid json parameters")))
   }
 
   def logout = Action { Ok.destroySession }
@@ -31,17 +34,4 @@ class Login extends Controller with CookieSupport{
       case None => Ok
     }
   }
-
-  private def credsValid(uname: String, pass: String) = {
-    (uname == "a" && pass == "a") || (uname == "b" && pass == "b")
-  }
-
-  private def credsFrom(request: Request[AnyContent]) : Option[(String, String)] =
-    request.body.asJson.flatMap{
-      case json => Try({
-        val uname = (json \ "username").as[String]
-        val pass = (json \ "password").as[String]
-        (uname, pass)
-      }).toOption
-    }
 }

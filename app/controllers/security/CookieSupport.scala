@@ -1,7 +1,6 @@
 package controllers.security
 
 import helpers.ConfigHelper
-import play.api._
 import play.api.libs.Crypto
 import play.api.mvc.{Cookie, DiscardingCookie, RequestHeader, Result}
 
