@@ -6,8 +6,11 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
+import services.UserService
 
 trait Secured extends CookieSupport {
+
+  val userService: UserService
 
   import CookieSupport._
   import Secured._
@@ -35,14 +38,11 @@ trait Secured extends CookieSupport {
     }
   }
 
-      /**
-      * This method shows how you could wrap the withAuth method to also fetch your user
-      * You will need to implement UserDAO.findOneByUsername
-      */
-//    def withUser(f: User => Request[AnyContent] => Result) = withAuth { username => implicit request =>
-//      val user = User("aaaa@bbbb.cc", username, "123")
-//      f(user)(request)
-//    }
+  def withUserAsync(f: User => Request[AnyContent] => Future[Result]) = withAuthAsync { username => implicit request =>
+      userService.findFullUser(username) flatMap {
+        case user => f(user.get)(request)
+      }
+    }
   }
 
 object Secured{

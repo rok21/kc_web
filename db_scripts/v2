@@ -1,0 +1,21 @@
+CREATE TABLE CITIES(
+    ID  INT PRIMARY KEY     NOT NULL UNIQUE,
+    CITY    TEXT,
+    COUNTRY TEXT
+);
+
+CREATE SEQUENCE city_id_seq;
+
+ALTER TABLE cities ALTER id SET DEFAULT NEXTVAL('city_id_seq');
+
+INSERT INTO cities (city, country) VALUES('Berlin', 'Germany');
+INSERT INTO cities (city, country) VALUES('Vilnius', 'Lithuania');
+
+ALTER TABLE users
+ADD COLUMN city_id INT;
+
+ALTER TABLE users
+ADD FOREIGN KEY (city_id)
+REFERENCES cities;
+
+--ALTER TABLE users ADD COLUMN city

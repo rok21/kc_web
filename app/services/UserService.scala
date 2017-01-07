@@ -15,8 +15,10 @@ import scala.concurrent.Future
   */
 class UserService @Inject()(repo: UsersRepo) {
 
+  def findFullUser(nickOrEmail: String) = repo.findFullUser(nickOrEmail)
+
   def login(nickOrEmail: String, password: String): Future[User] =
-    repo.findByNickOrEmail(nickOrEmail) flatMap {
+    findFullUser(nickOrEmail) flatMap {
       case Some(u) if u.password == password => Future.successful(u)
       case _ => Future.failed(new Exception("Login failed"))
     }

@@ -1,27 +1,52 @@
 package dal
 
 import com.google.inject.Inject
-import models.User
+import models.{City, User}
 import services.SqlDb
 import slick.driver.H2Driver.api._
+import slick.lifted.ForeignKeyQuery
+import play.api.libs.concurrent.Execution.Implicits._
 
-class UsersRepo @Inject()(sqlDb: SqlDb){
+import scala.concurrent.Future
+
+class UsersRepo @Inject()(sqlDb: SqlDb, citiesRepo: CitiesRepo){
+
+  import UsersRepo._
 
   val table = TableQuery[Users]
 
-  class Users(tag : Tag) extends Table[User](tag, "users"){
+  type UserRow = (String, String, String, Option[Int])
+  class Users(tag : Tag) extends Table[UserRow](tag, "users"){
 
     def id: Rep[Int] = column[Int]("id", O.AutoInc, O.PrimaryKey)
     def nick: Rep[String] = column[String]("nick", O.PrimaryKey)
     def email: Rep[String] = column[String]("email", O.PrimaryKey)
     def password: Rep[String] = column[String]("password")
+    def cityId: Rep[Int] = column[Int]("city_id")
 
-    override def *  = (email, nick, password) <> (User.tupled, User.unapply)
+    override def *  = (email, nick, password, cityId.?)
   }
 
-  def findByNickOrEmail(noe: String) = sqlDb.run(
-      table.filter(u => u.nick === noe || u.email === noe).result.headOption
-    )
+  def findFullUser(nickOrEmail: String) = {
 
-  def createUser(user: User) = sqlDb.run(table += user)
+    val fullUserQuery = (nickOrEmail: String) => for{
+      (u, c) <- table.filter(u => u.nick === nickOrEmail || u.email === nickOrEmail) joinLeft citiesRepo.table on (_.cityId === _.id)
+    } yield (u, c)
+
+    sqlDb.run(
+      fullUserQuery(nickOrEmail).result.headOption
+    ) map {
+      case option => option.map {
+        case ((email, nick, password, cityId), city) => User(email, nick, password, city)
+      }
+    }
+  }
+
+  def createUser(user: User) = sqlDb.run(table += user.toRow)
+}
+
+object UsersRepo{
+  implicit class UserExtensions(user: User) {
+    def toRow = (user.email, user.password, user.password, user.city.map(_.id))
+  }
 }

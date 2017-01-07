@@ -22,7 +22,7 @@ object JsonHelper {
         val email = (json \ "email").as[String]
         val uname = (json \ "username").as[String]
         val pass = (json \ "password").as[String]
-        User(email, uname, pass)
+        User(email, uname, pass, None)
       }).toOption
     }
 }

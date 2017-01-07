@@ -1,0 +1,6 @@
+register -> select city -> select level
+										-> singles -> enter pool -> challenge/accept
+										-> singles in game mode
+										-> doubles -> ..
+										-> change avatar
+										-> ..
