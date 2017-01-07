@@ -17,7 +17,7 @@ class UserService @Inject()(repo: UsersRepo) {
 
   def login(nickOrEmail: String, password: String): Future[User] =
     repo.findByNickOrEmail(nickOrEmail) flatMap {
-      case u: User if u.password == password => Future.successful(u)
+      case Some(u) if u.password == password => Future.successful(u)
       case _ => Future.failed(new Exception("Login failed"))
     }
 

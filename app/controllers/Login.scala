@@ -21,6 +21,8 @@ class Login @Inject()(userService: UserService) extends Controller with CookieSu
       case (login, pass) => {
         userService.login(login, pass).map {
           case user => Ok.addSessionCookie(user.nick)
+        } recover {
+          case ex => Ok(ex.getMessage)
         }
       }
     }.getOrElse(Future.failed(new Exception("Invalid json parameters")))

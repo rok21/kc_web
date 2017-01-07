@@ -20,7 +20,7 @@ class UsersRepo @Inject()(sqlDb: SqlDb){
   }
 
   def findByNickOrEmail(noe: String) = sqlDb.run(
-      table.filter(u => u.nick === noe || u.email === noe).result.head
+      table.filter(u => u.nick === noe || u.email === noe).result.headOption
     )
 
   def createUser(user: User) = sqlDb.run(table += user)
