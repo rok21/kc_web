@@ -20,7 +20,7 @@ class Login @Inject()(userService: UserService) extends Controller with CookieSu
     JsonHelper.getLoginCreds(request).map {
       case (login, pass) => {
         userService.login(login, pass).map {
-          case user => Ok.  addSessionCookie(user.nick)
+          case userNick => Ok.addSessionCookie(userNick)
         } recover {
           case ex => Ok(ex.getMessage)
         }
@@ -31,7 +31,7 @@ class Login @Inject()(userService: UserService) extends Controller with CookieSu
   def logout = Action { Ok.destroySession }
 
   def currentUser = Action {
-    request => getUser(request) match {
+    request => getUserNick(request) match {
       case Some(user) => Ok(user)
       case None => Ok
     }

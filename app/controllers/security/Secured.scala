@@ -21,7 +21,7 @@ trait Secured extends CookieSupport {
   }
 
   def withAuth(f: => String => Request[AnyContent] => Result) = {
-    Security.Authenticated(getUser, onUnauthorized) { user =>
+    Security.Authenticated(getUserNick, onUnauthorized) { user =>
       Action(request => {
         logIdentified(user, request)
         f(user)(request).updateSessionCookie(request)
@@ -30,7 +30,7 @@ trait Secured extends CookieSupport {
   }
 
   def withAuthAsync(f: => String => Request[AnyContent] => Future[Result]) = {
-    Security.Authenticated(getUser, onUnauthorized) { user =>
+    Security.Authenticated(getUserNick, onUnauthorized) { user =>
       Action.async(request => {
         logIdentified(user, request)
         f(user)(request).map(_.updateSessionCookie(request))

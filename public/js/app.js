@@ -17,6 +17,10 @@ app.config(function($routeProvider, $locationProvider, $provide, $httpProvider) 
             templateUrl: "/assets/html/home.html",
             controller: "HomeCtrl"
         })
+        .when("/cityselect", {
+            templateUrl: "/assets/html/cityselect.html",
+            controller: "CitySelectCtrl"
+        })
 		.otherwise({
 			redirectTo: "/login"
 		});

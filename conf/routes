@@ -2,13 +2,19 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
 GET     /                           controllers.Application.index
+
+#account
 POST    /registration/save          controllers.Registration.save
-GET     /users/user                 controllers.Users.getUserInfo
 GET     /login/current              controllers.Login.currentUser
 POST    /login                      controllers.Login.login
 POST    /login/logout               controllers.Login.logout
+
+#user data
+GET     /users/user                 controllers.Users.getUserData
+
+#misc
+GET     /app/cities                 controllers.Application.getAllCities
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file)
 GET     /*any                       controllers.Application.angular(any)

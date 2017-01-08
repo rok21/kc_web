@@ -8,7 +8,7 @@ trait CookieSupport {
 
   import CookieSupport._
 
-  def getUser(request: RequestHeader): Option[String] = {
+  def getUserNick(request: RequestHeader): Option[String] = {
     request.cookies.get(SessionKey).map {
       case cookie =>
         val user = Crypto.decryptAES(cookie.value)

@@ -1,0 +1,6 @@
+<h3>Pls select your city!</h3>
+<!-- label for value in array -->
+<label for="citySel">Array select 1:</label>
+<select id="citySel" ng-model="citySelValue" ng-options="getCityFullName(city) for city in allCities track by city.id">
+    <option value="">[Pls select]</option>
+</select>
