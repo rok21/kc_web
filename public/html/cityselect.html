@@ -1,6 +1,17 @@
-<h3>Pls select your city!</h3>
-<!-- label for value in array -->
-<label for="citySel">Array select 1:</label>
-<select id="citySel" ng-model="citySelValue" ng-options="getCityFullName(city) for city in allCities track by city.id">
-    <option value="">[Pls select]</option>
-</select>
+
+<form id ="citySelectForm" class="form col-xs-offset-2" role="form" ng-submit="onComplete()">
+
+    <h3>Select your city!</h3>
+    <select id="citySel" ng-model="citySelValue"
+            ng-options="getCityFullName(city) for city in allCities track by city.id" required>
+        <option value="">[Pls select]</option>
+    </select>
+
+    <div class="form-group">
+        <div class="col-xs-offset-4 col-lg-offset-2 col-xs-2">
+            <button type="submit" class="btn btn-success btn-lg" id="btn_submit"
+                    ng-disabled="citySelectForm.$invalid">Go!</button>
+        </div>
+    </div>
+
+</form>

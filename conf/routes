@@ -12,6 +12,7 @@ POST    /login/logout               controllers.Login.logout
 
 #user data
 GET     /users/user                 controllers.Users.getUserData
+POST    /users/update/city          controllers.Users.updateCity
 
 #misc
 GET     /app/cities                 controllers.Application.getAllCities

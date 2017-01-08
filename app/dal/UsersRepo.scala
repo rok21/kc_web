@@ -43,6 +43,15 @@ class UsersRepo @Inject()(sqlDb: SqlDb, citiesRepo: CitiesRepo){
   }
 
   def createUser(user: User) = sqlDb.run(table += user.toRow)
+
+  def updateCity(nick: String, cityId: Int) = {
+
+    val q = for{
+      u <- table if u.nick === nick
+    } yield u.cityId
+
+    sqlDb.run(q.update(cityId))
+  }
 }
 
 object UsersRepo{
