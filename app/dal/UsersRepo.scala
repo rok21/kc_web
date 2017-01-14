@@ -56,6 +56,6 @@ class UsersRepo @Inject()(sqlDb: SqlDb, citiesRepo: CitiesRepo){
 
 object UsersRepo{
   implicit class UserExtensions(user: User) {
-    def toRow = (user.email, user.password, user.password, user.city.map(_.id))
+    def toRow = (user.email, user.nick, user.password, user.city.map(_.id))
   }
 }
