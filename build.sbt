@@ -18,3 +18,5 @@ libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % "9.4-1206-jdbc41",
   "org.json4s" %% "json4s-native" % "3.5.0"
 )
+
+fork in run := true

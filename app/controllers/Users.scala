@@ -21,6 +21,7 @@ class Users @Inject()(val userService: UserService) extends Controller with Secu
     val city = parseCity(request)
     userService.updateCity(usernick, city.id)
     Future.successful(Ok)
-
   }}
+
+
 }

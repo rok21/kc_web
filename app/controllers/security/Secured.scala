@@ -42,7 +42,16 @@ trait Secured extends CookieSupport {
       userService.findFullUser(username) flatMap {
         case user => f(user.get)(request)
       }
-    }
+  }
+
+  // websocket auth?
+//  def getUser(request: Request[AnyContent]) : Future[Option[User]] ={
+//    getUserNick(request) match {
+//      case Some(nick) => userService.findFullUser(nick)
+//      case None => Future.successful(None)
+//    }
+//  }
+
   }
 
 object Secured{

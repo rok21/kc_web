@@ -17,5 +17,8 @@ POST    /users/update/city          controllers.Users.updateCity
 #misc
 GET     /app/cities                 controllers.Application.getAllCities
 
+#sockets
+GET     /homews                     controllers.Application.homews
+
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file)
 GET     /*any                       controllers.Application.angular(any)

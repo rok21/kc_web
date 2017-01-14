@@ -17,5 +17,3 @@ ADD COLUMN city_id INT;
 ALTER TABLE users
 ADD FOREIGN KEY (city_id)
 REFERENCES cities;
-
---ALTER TABLE users ADD COLUMN city
