@@ -1,30 +1,31 @@
 <div class="container">
-    <h1 class="display-3">pls log in</h1>
+
+    <div class="row">
+        <h1 class="display-3">pls log in</h1>
+    </div>
 
     <form id ="loginForm" class="form col-xs-offset-2" role="form" ng-submit="onComplete()">
 
-    <div class="form-group row">
-        <label for="user-name" class="col-xs-2 col-form-label">Username or email</label>
+        <div class="form-group row">
+            <label for="user-name" class="col-form-label">Username or email</label>
+        </div>
 
-        <div class="col-xs-8 col-lg-3">
+        <div class="form-group row">
             <input class="form-control" type="text" id="user-name" ng-model="$data.username">
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="user-name" class="col-xs-2 col-form-label">Password</label>
+        <div class="form-group row">
+            <label for="password" class="col-xs-2 col-form-label">Password</label>
+        </div>
 
-        <div class="col-xs-8 col-lg-3">
+        <div class="form-group row">
             <input class="form-control" type="password" id="password" ng-model="$data.password">
         </div>
-    </div>
 
     <pre ng-show="$error">{{$error}}</pre>
 
-    <div class="form-group">
-        <div class="col-xs-offset-8 col-lg-offset-5 col-xs-2">
-            <button type="submit" class="btn btn-success btn-lg" id="btn_login">Go!</button>
-        </div>
+    <div class="form-group row">
+        <button type="submit" class="btn btn-success btn-lg" id="btn_login">Go!</button>
     </div>
 
     </form>

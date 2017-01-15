@@ -24,8 +24,12 @@ class Application @Inject()(implicit system: ActorSystem,
   def angular(any: Any) = index
 
   def getAllCities = Action.async{
+    Logger.info("Getting cities from db")
     citiesRepo.allCities map {
-      case cities => Ok(toJson(cities))
+      case cities => {
+        Logger.info("Returning cities via http")
+        Ok(toJson(cities))
+      }
     }
   }
 
