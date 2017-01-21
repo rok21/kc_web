@@ -4,9 +4,10 @@ import models.User
 import play.api.Logger
 import play.api.mvc._
 
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
 import play.api.libs.concurrent.Execution.Implicits._
 import services.UserService
+import scala.concurrent.duration._
 
 trait Secured extends CookieSupport {
 
@@ -44,15 +45,18 @@ trait Secured extends CookieSupport {
       }
   }
 
-  // websocket auth?
-//  def getUser(request: Request[AnyContent]) : Future[Option[User]] ={
-//    getUserNick(request) match {
-//      case Some(nick) => userService.findFullUser(nick)
-//      case None => Future.successful(None)
-//    }
-//  }
-
+  def getUser(request: RequestHeader) = {
+    getUserNick(request) match {
+      case Some(nick) => {
+        Logger.info(nick)
+        val x = userService.findFullUser(nick)
+        Logger.info(x.toString)
+        x
+      }
+      case None => Future.successful(None)
+    }
   }
+}
 
 object Secured{
   private def logIdentified(user: String, request: RequestHeader) =

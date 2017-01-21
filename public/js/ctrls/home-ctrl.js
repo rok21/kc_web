@@ -10,7 +10,11 @@ app.controller('HomeCtrl', function($scope, $http, $resource, $routeParams, $loc
     ws = new WebSocket($scope.homewsURL)
     ws.onmessage = function(event){
                     console.log(event.data)
-                    $scope.serverMsg = event.data
+                    if(event.data.startsWith("time:")){
+                        $scope.serverTime = event.data
+                    }else{
+                        $scope.serverMsg = event.data
+                    }
                     $scope.$apply();
             }
 });
