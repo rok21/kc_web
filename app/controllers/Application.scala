@@ -5,6 +5,7 @@ import akka.stream.Materializer
 import com.google.inject.Inject
 import dal.CitiesRepo
 import helpers.Json4sSupport
+import org.joda.time.DateTime
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.streams.ActorFlow
 import play.api.mvc._
@@ -24,6 +25,7 @@ class Application @Inject()(implicit system: ActorSystem,
   def angular(any: Any) = index
 
   def getAllCities = Action.async{
+    //Logger.info("hi")
     citiesRepo.allCities map {
       case cities => Ok(toJson(cities))
     }
@@ -46,7 +48,7 @@ class MyWebSocketActor(out: ActorRef) extends Actor {
   override def receive: Receive = {
     case "push" => {
       val rand = new Random(System.nanoTime())
-      out ! s"millis: ${System.currentTimeMillis()} rand: ${rand.nextBoolean()}"
+      out ! s"millis: ${System.currentTimeMillis()} rand: ${rand.nextBoolean()} \n time:${new DateTime().toString}"
     }
   }
 }
