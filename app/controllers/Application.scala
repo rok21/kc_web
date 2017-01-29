@@ -54,12 +54,13 @@ class MyWebSocketActor(user :User, chatrooms: Chatrooms, out: ActorRef) extends 
 
   override def postStop() = {
     Logger.info(s"Socket connection with $out has been closed")
+    chatrooms.leave(user, self)
   }
 
   override def receive: Receive = {
     case "push" => out ! s"time: ${new DateTime().toString}"
-    case users :Set[User] => {
-      out ! users.map(_.nick).foldRight("")((nick, str) => s"$nick $str")
+    case msg: String => {
+      out ! msg
     }
     case x => Logger.info(s"Socket actor received $x")
   }

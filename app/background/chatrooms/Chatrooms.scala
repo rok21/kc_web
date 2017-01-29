@@ -2,7 +2,7 @@ package background.chatrooms
 
 import akka.pattern._
 import akka.actor.{ActorRef, ActorSystem, PoisonPill, Props}
-import background.chatrooms.CityChat.NewMember
+import background.chatrooms.CityChat.{NewMember, RemoveMember}
 import com.google.inject.Inject
 import dal.CitiesRepo
 import models.User
@@ -29,5 +29,10 @@ class Chatrooms @Inject() (applicationLifecycle: ApplicationLifecycle, actorSyst
       case cities =>
         cities(user.city.get) ! NewMember(user, ref)
     }
+  }
+
+  def leave(user: User, ref: ActorRef) = cityChats map {
+    case cities =>
+      cities(user.city.get) ! RemoveMember(ref)
   }
 }
