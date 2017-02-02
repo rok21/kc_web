@@ -3,7 +3,13 @@
 </div>
 
 <div class="container">
-    {{serverTime || serverTime === 0 ? serverTime : "wait for it (time).."}}
+    <table>
+        <tbody>
+            <tr ng-repeat="timer in timers">
+                <td timer></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <div class="container">

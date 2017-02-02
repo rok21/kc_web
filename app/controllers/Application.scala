@@ -49,7 +49,7 @@ class Application @Inject()(implicit system: ActorSystem,
 class MyWebSocketActor(user :User, chatrooms: Chatrooms, out: ActorRef) extends Actor {
   override def preStart() = {
     chatrooms.join(user, self)
-    context.system.scheduler.schedule(5 seconds, 50 milliseconds, self, "push")
+    context.system.scheduler.schedule(1 second, 50 milliseconds, self, "push")
   }
 
   override def postStop() = {
@@ -58,7 +58,11 @@ class MyWebSocketActor(user :User, chatrooms: Chatrooms, out: ActorRef) extends 
   }
 
   override def receive: Receive = {
-    case "push" => out ! s"time: ${new DateTime().toString}"
+    case "push" => {
+      val rand = new Random(System.nanoTime())
+      val timerIndex = rand.nextInt(5)
+      out ! s"time-$timerIndex: ${new DateTime().toString}"
+    }
     case msg: String => {
       out ! msg
     }
