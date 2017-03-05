@@ -4,60 +4,23 @@ module kc_web {
     export class LoginCtrl {
         public static $inject = [
 			'$scope',
-            '$rootScope',
-            '$http', 
-            '$location',
-            '$routeParams'
+            '$http',
+            'sessionService'
 		];
 
         constructor(
             private $scope: ILoginScope,
-            private $rootScope: IRootScope, 
-            private $http: ng.IHttpService,
-            private $location: ng.ILocationService){
-                this.checkCurrentUser();
+            private $http: ng.IHttpService, 
+            private sessionService: SessionService){
+                this.sessionService.checkCookieAndRedirect()
+                $scope.vm = this;
         }
         
-        checkCurrentUser(){
-            this.$http.get("/login/current").then((response)=> {
-                if(response){
-                    this.onLoggedIn(response);
-            }})
-        }
-        onLoggedIn(username){
-            this.$rootScope.user = username;
-            console.log(this.$location)
-            this.$location.path('/home');
+        onComplete(){
+            this.$http.post("/login", this.$scope.credentials)
+            .then((response: ng.IHttpPromiseCallbackArg<string>) =>
+                response.data ? this.$scope.error = response.data : this.sessionService.checkCookieAndRedirect()
+            );
         }
     }
 }
-
-// app.controller('LoginCtrl', function($rootScope, $scope, $http, $resource, $routeParams, $location){
-
-    // checkCurrentUser = function(){
-    //     $http.get("/login/current")
-    //      .success(function(response){
-    //         if(response){
-    //             onLoggedIn(response)
-    //         }
-    //     })
-    // }
-
-    // onLoggedIn = function(username){
-    //     $rootScope.user = username
-    //     $location.path('/home')
-    // }
-
-    // $scope.onComplete = function(){
-    //     $http.post("/login", this.$data)
-    //     .success(function(response){
-    //         if(response){
-    //             $scope.$error = response
-    //         }else{
-    //             checkCurrentUser()
-    //         }
-    //     })
-    // }
-
-    // checkCurrentUser()
-// });

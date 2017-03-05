@@ -42,7 +42,7 @@ class UsersRepo @Inject()(sqlDb: SqlDb, citiesRepo: CitiesRepo){
     }
   }
 
-  def createUser(user: User) = sqlDb.run(table += user.toRow)
+  def createUser(user: User) = sqlDb.run(table += user.toRow).map(_ => println("createUser"))
 
   def updateCity(nick: String, cityId: Int) = {
 
@@ -51,6 +51,13 @@ class UsersRepo @Inject()(sqlDb: SqlDb, citiesRepo: CitiesRepo){
     } yield u.cityId
 
     sqlDb.run(q.update(cityId))
+  }
+
+  def uniqueNickOrEmail(noe: String) = isUnique(u => u.email === noe || u.nick === noe)
+
+  private def isUnique(filterFun: Users => Rep[Boolean]) = {
+    val q = table.filter(filterFun).length.result
+    sqlDb.run(q).map(_ == 0)
   }
 }
 

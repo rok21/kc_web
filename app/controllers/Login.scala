@@ -17,15 +17,12 @@ class Login @Inject()(userService: UserService) extends Controller with CookieSu
   import CookieSupport._
 
   def login = Action.async { request =>
-    JsonHelper.getLoginCreds(request).map {
-      case (login, pass) => {
-        userService.login(login, pass).map {
-          case userNick => Ok.addSessionCookie(userNick)
-        } recover {
-          case ex => Ok(ex.getMessage)
-        }
-      }
-    }.getOrElse(Future.failed(new Exception("Invalid json parameters")))
+    val (login, pass) = JsonHelper.getLoginCreds(request)
+    userService.login(login, pass).map {
+      case userNick => Ok.addSessionCookie(userNick)
+    } recover {
+      case ex => Ok(ex.getMessage)
+    }
   }
 
   def logout = Action { Ok.destroySession }

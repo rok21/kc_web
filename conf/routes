@@ -5,6 +5,7 @@
 GET     /                           controllers.Application.index
 
 #account
+POST     /registration/unique        controllers.Registration.isUnique
 POST    /registration/save          controllers.Registration.save
 GET     /login/current              controllers.Login.currentUser
 POST    /login                      controllers.Login.login

@@ -6,7 +6,6 @@ import helpers.JsonHelper
 import play.api.mvc.{Action, Controller}
 import services.UserService
 import play.api.libs.concurrent.Execution.Implicits._
-import scala.concurrent.Future
 
 /**
   * Created by Rokas on 13/11/2016.
@@ -14,10 +13,17 @@ import scala.concurrent.Future
 class Registration @Inject()(userService: UserService) extends Controller with CookieSupport{
 
   def save = Action.async { request =>
-    JsonHelper.getRegistration(request).map{
-      case user =>
-        userService.register(user)
-          .map(_ => Ok.addSessionCookie(user.nick))
-    }.getOrElse(Future.failed(new Exception("Invalid json parameters")))
+    val user = JsonHelper.getRegistration(request)
+    userService.register(user).map(_ => Ok.addSessionCookie(user.nick))
+  }
+
+  def isUnique = Action.async{ request =>
+
+    println(request.body.asJson)
+    val fields = JsonHelper.getFieldsForSsVal(request)
+
+    userService.checkUniqueness(fields).map(_ => Ok).recover({
+      case t: Throwable => Ok(t.getMessage)
+    })
   }
 }

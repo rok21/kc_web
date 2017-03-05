@@ -1,10 +1,10 @@
-<form id ="registrationForm" class="form col-xs-offset-2" role="form" ng-submit="onComplete()">
+<form id ="registrationForm" class="form col-xs-offset-2" role="form" ng-submit="vm.onComplete()">
 
     <div class="form-group row">
         <label for="email" class="col-xs-2 col-form-label">Email</label>
 
         <div class="col-xs-8 col-lg-3">
-            <input class="form-control" type="text" id="email" ng-model="$data.email">
+            <input class="form-control" type="text" id="email" ng-model="data.email" ng-blur="vm.serverSideValidate()">
         </div>
     </div>
 
@@ -12,7 +12,7 @@
         <label for="user-name" class="col-xs-2 col-form-label">Username</label>
 
         <div class="col-xs-8 col-lg-3">
-            <input class="form-control" type="text" id="user-name" ng-model="$data.username">
+            <input class="form-control" type="text" id="user-name" ng-model="data.username" ng-blur="vm.serverSideValidate()">
         </div>
     </div>
 
@@ -20,7 +20,7 @@
         <label for="user-name" class="col-xs-2 col-form-label">Password</label>
 
         <div class="col-xs-8 col-lg-3">
-            <input class="form-control" type="password" id="password" ng-model="$data.password">
+            <input class="form-control" type="password" id="password" ng-model="data.password">
         </div>
     </div>
 
@@ -28,13 +28,11 @@
         <label for="user-name" class="col-xs-2 col-form-label">Repeat password</label>
 
         <div class="col-xs-8 col-lg-3">
-            <input class="form-control" type="password" id="password-repeated" ng-model="$data.passwordRepeated">
+            <input class="form-control" type="password" id="password-repeated" ng-model="data.passwordRepeated">
         </div>
     </div>
 
-    <pre>{{ $data | json }}</pre>
-
-    <pre ng-show="$error">{{$error}}</pre>
+    <pre ng-show="error">{{error}}</pre>
 
     <div class="form-group">
         <div class="col-xs-offset-8 col-lg-offset-5 col-xs-2">

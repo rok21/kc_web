@@ -4,14 +4,14 @@
         <h1 class="display-3">pls log in</h1>
     </div>
 
-    <form id ="loginForm" class="form col-xs-offset-2" role="form" ng-submit="onComplete()">
+    <form id ="loginForm" class="form col-xs-offset-2" role="form" ng-submit="vm.onComplete()">
 
         <div class="form-group row">
             <label for="user-name" class="col-form-label">Username or email</label>
         </div>
 
         <div class="form-group row">
-            <input class="form-control" type="text" id="user-name" ng-model="$data.username">
+            <input class="form-control" type="text" id="user-name" ng-model="credentials.username">
         </div>
 
         <div class="form-group row">
@@ -19,10 +19,10 @@
         </div>
 
         <div class="form-group row">
-            <input class="form-control" type="password" id="password" ng-model="$data.password">
+            <input class="form-control" type="password" id="password" ng-model="credentials.password">
         </div>
 
-    <pre ng-show="$error">{{$error}}</pre>
+    <pre ng-show="error">{{error}}</pre>
 
     <div class="form-group row">
         <button type="submit" class="btn btn-success btn-lg" id="btn_login">Go!</button>

@@ -1,7 +1,6 @@
- angular.module('kc_web.validation', [])
-   .factory("validation", function() {
-     return {
-       validRegForm: function(form) {
+ module kc_web {
+     export class ValidationService {
+         validRegForm(form) : string {
             if(!this.validMail(form.email)){
                 return "Invalid email!"
             }
@@ -15,9 +14,11 @@
                 return "Passwords don't match!"
             }
             return ""
-       },
-       validMail: function(email) {
+       }
+
+       validMail(email) : boolean {
          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
          return re.test(email);
        }
-    }});
+     }
+ }
